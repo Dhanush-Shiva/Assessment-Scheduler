@@ -10,16 +10,13 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    if (token && role) {
-      setUser({ token, role });
-    }
+    if (token && role) setUser({ token, role });
   }, []);
 
   const login = (token, role) => {
     localStorage.setItem('token', token);
     localStorage.setItem('role', role);
     setUser({ token, role });
-    
     if (role === 'admin') navigate('/admin');
     else if (role === 'hod') navigate('/hod');
     else if (role === 'representative') navigate('/rep');
@@ -31,9 +28,5 @@ export const AuthProvider = ({ children }) => {
     navigate('/login');
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 };
